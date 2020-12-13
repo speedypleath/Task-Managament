@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Index</h2>
+@foreach (var project in @ViewBag.Projects)
+{
+    <p> @project.Name</p>
+}
+
+@foreach (var not in @ViewBag.Notifications)
+{
+    <a href=@not.Action> @not.Content</a>
+}

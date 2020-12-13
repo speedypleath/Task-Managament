@@ -1,0 +1,12 @@
+﻿@model TaskManagement.Models.Project
+@{ ViewBag.Title = "Edit"; }
+<h2>Editeaza proiectul</h2>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+<hr />
+<form method="post" action="/Project/Edit/@Model.ProjectId">
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.Label("Name", "Nume proiect")
+    @Html.TextBox("Name", Model.Name, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-success" type="submit">Modifica proiect</button>
+</form>

@@ -1,0 +1,9 @@
+﻿@model comment
+<form method="post" action="/Comment/Edit/@Model.CommentId">
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    <label>Nume</label>
+    <br /> <input type="text" name="Content" value="@Model.Content" />
+    <br />
+    <br />
+    <button type="submit">Modifica comentariul</button>
+</form>

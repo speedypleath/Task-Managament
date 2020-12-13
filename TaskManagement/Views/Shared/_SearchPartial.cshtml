@@ -1,0 +1,20 @@
+﻿@model IEnumerable<TaskManagement.Models.ApplicationUser>
+<li>
+    <p class="text-center">Members</p>
+    <ul class="list-group">
+        @foreach (var user in ViewBag.members)
+        {
+            <li class="list-group-item"><a id="@user.Id">@user.UserName</a></li>
+        }
+    </ul>
+    <br />
+    <p class="text-center">Invite</p>
+
+    <ul class="list-group">
+        @foreach (var user in Model)
+        {
+            <li class="list-group-item"><a id="@user.Id" href='javascript:;' onclick='change(event);'>@user.UserName</a></li>
+        }
+    </ul>
+
+</li>

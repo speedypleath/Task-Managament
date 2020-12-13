@@ -1,0 +1,21 @@
+﻿
+@{ ViewBag.Title = "Nou task"; }
+
+<h2>Formular adaugare task nou</h2>
+<p> @ViewBag.projectId</p>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+<form method="post" action="/Task/New">
+ 
+    <input type="hidden" name="ProjectId" value="@ViewBag.projectId" />
+    <label>Nume</label>
+    <br />
+    <input type="text" name="Title" />
+    <br />
+    <br />
+    <label>Data</label>
+    <br />
+    <input type="datetime-local" name="DueDate" />
+    <br />
+    <button type="submit">Adauga task</button>
+</form>

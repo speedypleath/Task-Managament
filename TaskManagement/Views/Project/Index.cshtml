@@ -1,0 +1,19 @@
+﻿
+@{ ViewBag.Title = "Index"; }
+
+<h2>Afisare proiecte</h2>
+<h3 style="color:forestgreen">@ViewBag.success</h3>
+<h3 class="text-danger">@ViewBag.fail</h3>
+<br />
+@foreach (var project in ViewBag.Projects)
+{
+    <h2>@project.Name</h2>
+    <a href="/Project/Show/@project.ProjectId">Afisare proiect</a>
+    <br />
+    <hr />
+    <br/>
+}
+<a class="btn btn-info" href="/Project/New"> Adauga Proiect</a>
+<br />
+
+

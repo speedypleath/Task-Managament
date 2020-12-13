@@ -1,0 +1,69 @@
+﻿@model TaskManagement.Models.Project
+@{ ViewBag.Title = "Afisare proiect " + Model.Name; }
+<script>
+    var id = @Model.ProjectId;
+    
+</script>
+<div class="d-inline">
+    <h2 class="d-inline align-middle"> @Model.Name	&nbsp;</h2>
+</div>
+<div class="d-inline align-middle dropdown">
+    <button onclick="drop(@Model.ProjectId,'/Project/UpdateSearch')" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <i class="fas fa-users"></i>
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="empList"></li>
+        <li>
+            <form class="navbar navbar-light bg-light" id="selected" method="post" action="/Project/Invite">
+                @Html.Hidden("ProjectId", Model.ProjectId)
+                @Html.Hidden("UserId")
+                @Html.Hidden("Content", " invited you to join " + Model.Name)
+                @Html.Hidden("Action", "/Project/Join/" + Model.ProjectId)
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">@@</span>
+                    <input id="content" oninput="drop(@Model.ProjectId,'/Project/UpdateSearch')" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                </div>
+            </form>
+
+        </li>
+        <li role="separator" class="divider"></li>
+        <li>
+
+        </li>
+
+    </ul>
+</div>
+<h3 style="color:forestgreen">@ViewBag.success</h3>
+<h3 class="text-danger">@ViewBag.fail</h3>
+
+
+<br />
+<br />
+@foreach (var task in Model.Tasks)
+{
+    <h2>@task.Title</h2>
+    <p>@task.Description</p>
+    <br />
+    <a href="/Task/Show/@task.TaskId">Afisare task</a>
+    <br />
+    <hr />
+    <br />
+}
+<form>
+    <button class="btn btn-info" onclick="location.href='/Task/New/@Model.ProjectId'" type="button">Adauga un task</button>
+</form>
+<br />
+<form method="post" action="/Project/Edit/@Model.ProjectId">
+    <button class="btn btn-info" type="submit">Modifica proiectul</button>
+</form>
+<br />
+<form method="post" action="/Project/Delete/@Model.ProjectId">
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
+    <button class="btn btn-danger" type="submit">Sterge proiectul</button>
+</form>
+<br />
+<form method="post" action="/Project/Index">
+    <button class="btn btn-info" type="submit">Inapoi la lista proiectelor</button>
+</form>
+<br />

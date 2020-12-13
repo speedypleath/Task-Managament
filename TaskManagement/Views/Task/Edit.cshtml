@@ -1,0 +1,40 @@
+﻿@model TaskManagement.Models.Task
+@{ ViewBag.Title = "Edit"; }
+<h2>Edit task</h2>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+<hr />
+<button onclick="drop(@Model.TaskId,'/Task/UpdateSearch')" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <i class="fas fa-users"></i>
+    <span class="caret"></span>
+</button>
+<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li id="empList"></li>
+    <li>
+        <form class="navbar navbar-light bg-light" id="selected" method="post" action="/Task/Link">
+                @Html.Hidden("TaskId", Model.TaskId)
+                @Html.Hidden("UserId")
+                @Html.Hidden("Content", " assigned you " + Model.Title)
+                @Html.Hidden("Action", "/Task/Show/" + Model.TaskId)
+            <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">@@</span>
+                <input id="content" oninput="drop(@Model.TaskId,'/Task/UpdateSearch')" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+            </div>
+        </form>
+
+    </li>
+    <li role="separator" class="divider"></li>
+    <li>
+
+    </li>
+
+</ul>
+<form method="post" action="/Task/Edit/@Model.TaskId">
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.Label("Title", "Task name")
+    @Html.TextBox("Title", Model.Title, new { @class = "form-control" })
+    <br />
+    @Html.Label("Title", "Due date")
+    <input type="date" class="form-control" name="DueDate" value="@Model.DueDate.Year-@Model.DueDate.Month-@Model.DueDate.Day" />
+    <br />
+    <button class="btn btn-info" type="submit">Modify task</button>
+</form>

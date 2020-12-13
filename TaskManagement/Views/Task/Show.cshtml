@@ -1,0 +1,98 @@
+﻿@using System.Security.Principal;
+@using Microsoft.AspNet.Identity;
+@model TaskManagement.Models.Task
+@{
+    ViewBag.Title = "Afisare task " + Model.Title;
+}
+<h2> @Model.Title </h2>
+<h4> Due on @Model.DueDate </h4>
+<h3 style="color:forestgreen">@ViewBag.success</h3>
+<h3 class="text-danger">@ViewBag.fail</h3>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+<br />
+@foreach (var comm in Model.Comments)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div>
+                    <div id="state1">
+                        <p>@comm.Content</p> <small class="float-right">@comm.Date</small>
+                    </div>
+                    @if (comm.UserId == User.Identity.GetUserId() || User.IsInRole("Admin"))
+                    {
+                        <div style="display: inline-block; float : left; margin-right: 15px">
+                            <button onclick="activate(this,@comm.CommentId,`@comm.Date`,`@comm.Content`)"  class="fas fa-edit" style="border: none; background: transparent"></button>
+                        </div>
+                    }
+                </div>
+            @if (comm.UserId == User.Identity.GetUserId() || User.IsInRole("Admin"))
+            {
+                <div style="display: inline-block; float : left">
+                    <form method="post" action="/Comment/Delete/@comm.CommentId">
+                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+                        <button class="fas fa-trash" style="border: none; background: transparent" type="submit"></button>
+                    </form>
+                </div>
+            }
+                <div class="text-center">
+                    <i class="fas fa-user"></i> <i>comentariu scris de</i> <strong> @comm.User.UserName </strong>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+                </div>
+            </div>
+            <hr />
+            }
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-10">
+                        <form method="post" action="/Comment/New">
+                            <input type="hidden" name="TaskId" value="@Model.TaskId" />
+                            <label>Continut comentariu</label>
+                            <br />
+                            <input class="form-control" name="Content" />
+                            <br />
+                            <button class="btn btn-success " type="submit">Adauga comentariu</button>
+                        </form>
+                        <br />
+                        <form method="post" action="/Task/Edit/@Model.TaskId">
+                            <button class="btn btn-info" type="submit">Editeaza taskul</button>
+                        </form>
+                        <br />
+                        <form method="post" action="/Project/Show/@Model.ProjectId">
+                            <button class="btn btn-info" type="submit">Inapoi la proiect</button>
+                        </form>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+
+<script>
+    function activate(e,id,date,content) {
+        console.log("Da");
+        console.log(id);
+        console.log(date);
+        console.log(content);
+        console.log(e.parentElement);
+        var aux = e.parentElement.parentElement.childNodes[1];
+        if (aux.id == "state1") {
+        aux.id = "state2"
+        aux.innerHTML = `<form method="post" action="/Comment/Edit/${id}">
+        @Html.HttpMethodOverride(HttpVerbs.Put)
+        <input class="form-control" name="Content" value="${content}"/>
+        </form>
+        <small> press edit again to cancel</small >`;
+        }
+        else {
+        aux.id = "state1";
+        aux.innerHTML = `<p>${content}</p> <small class="float-right">${date}</small>`
+        }
+
+        }
+
+</script>
