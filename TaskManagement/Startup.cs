@@ -13,7 +13,7 @@ namespace TaskManagement
         {
             ConfigureAuth(app);
             System.Diagnostics.Debug.WriteLine("da");
-            System.Diagnostics.Debug.WriteLine(System.Environment.GetEnvironmentVariable("SENDGRID_API_KEY"));
+            System.Diagnostics.Debug.WriteLine(System.Environment.GetEnvironmentVariable("SENDGRID_API"));
             CreateAdminUserAndApplicationRoles();
         }
         private void CreateAdminUserAndApplicationRoles()
