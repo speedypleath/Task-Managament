@@ -34,7 +34,7 @@ namespace TaskManagement
         static async Task ConfigSendGridasync(IdentityMessage message)
         {
             System.Diagnostics.Debug.WriteLine("yaaya se intampla");
-            var apiKey = System.Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var apiKey = System.Environment.GetEnvironmentVariable("SENDGRID_API");
             System.Diagnostics.Debug.WriteLine(apiKey);
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("andrei-serban.gheorghe@my.fmi.unibuc.ro", "admin");

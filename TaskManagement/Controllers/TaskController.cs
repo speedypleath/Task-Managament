@@ -16,11 +16,11 @@ namespace TaskManagement.Controllers
         public ActionResult Show(int id)
         {
             var task = db.Tasks.Find(id);
-            if(TempData.ContainsKey("success"))
+            if (TempData.ContainsKey("success"))
             {
                 ViewBag.success = TempData["success"].ToString();
             }
-            if(TempData.ContainsKey("fail"))
+            if (TempData.ContainsKey("fail"))
             {
                 ViewBag.fail = TempData["fail"].ToString();
             }
@@ -35,14 +35,14 @@ namespace TaskManagement.Controllers
             {
                 if (!user.IsEditor && !User.IsInRole("Admin"))
                 {
-                    TempData["fail"] = "You can only add a task if you're and editor";
+                    TempData["fail"] = "You can only add a task if you're an editor";
                     return RedirectToAction("Show/" + id.ToString(), "Project");
                 }
                 ViewBag.projectId = id;
                 return View();
             }
             TempData["fail"] = "You're not authorized to see this!";
-            return RedirectToAction("Index","Project");
+            return RedirectToAction("Index", "Project");
 
         }
 
@@ -51,7 +51,7 @@ namespace TaskManagement.Controllers
         {
             try
             {
-                task.Description = "aaa";
+                task.Description = "";
                 db.Tasks.Add(task);
                 db.SaveChanges();
                 TempData["success"] = "Taskul a fost adaugat cu succes!";
@@ -61,7 +61,8 @@ namespace TaskManagement.Controllers
                     action = "Show",
                     id = task.ProjectId.ToString()
                 });
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 return View();
             }
@@ -92,14 +93,17 @@ namespace TaskManagement.Controllers
             try
             {
                 Task task = db.Tasks.Find(id);
-                if(TryUpdateModel(task))
+                if (TryUpdateModel(task))
                 {
+                    task.Title = requestTask.Title;
+                    task.Description = requestTask.Description;
                     task.DueDate = requestTask.DueDate;
                     db.SaveChanges();
                     TempData["success"] = "Taskul a fost modificat cu succes!";
                 }
                 return RedirectToAction("Show/" + task.TaskId.ToString());
-            } catch(Exception)
+            }
+            catch (Exception)
             {
                 return View();
             }
@@ -116,7 +120,7 @@ namespace TaskManagement.Controllers
                 if (!user.IsEditor && !User.IsInRole("Admin"))
                 {
                     TempData["fail"] = "You can only delete a task if you're and editor";
-                    return RedirectToAction("Show/" + task.ProjectId.ToString(),"Project");
+                    return RedirectToAction("Show/" + task.ProjectId.ToString(), "Project");
                 }
                 TempData["success"] = "Taskul a fost sters cu succes!";
                 db.Tasks.Remove(task);
@@ -150,8 +154,8 @@ namespace TaskManagement.Controllers
             System.Diagnostics.Debug.WriteLine("daaaa");
             var task = db.Tasks.Find(id);
             var utask = from ut in db.UserTasks
-                      where ut.TaskId == id
-                      select ut.User;
+                        where ut.TaskId == id
+                        select ut.User;
             ViewBag.members = utask;
             var aux2 = from u in db.Users
                        where !utask.Contains(u)

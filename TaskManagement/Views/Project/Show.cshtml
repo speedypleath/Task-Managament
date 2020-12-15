@@ -4,6 +4,7 @@
     var id = @Model.ProjectId;
     
 </script>
+<br />
 <div class="d-inline">
     <h2 class="d-inline align-middle"> @Model.Name	&nbsp;</h2>
 </div>
@@ -34,19 +35,17 @@
 
     </ul>
 </div>
+<br />
 <h3 style="color:forestgreen">@ViewBag.success</h3>
 <h3 class="text-danger">@ViewBag.fail</h3>
 
 
 <br />
-<br />
 @foreach (var task in Model.Tasks)
 {
     <h2>@task.Title</h2>
     <p>@task.Description</p>
-    <br />
     <a href="/Task/Show/@task.TaskId">Afisare task</a>
-    <br />
     <hr />
     <br />
 }
