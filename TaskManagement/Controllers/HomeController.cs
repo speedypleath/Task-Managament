@@ -10,6 +10,11 @@ namespace TaskManagement.Controllers
     {
         public ActionResult Index()
         {
+            if (Request.IsAuthenticated) return RedirectToRoute(new
+            {
+                controller = "Project",
+                action = "Index"
+            });
             return View();
         }
 

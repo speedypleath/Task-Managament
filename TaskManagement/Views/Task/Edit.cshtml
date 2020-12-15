@@ -30,10 +30,12 @@
 </ul>
 <form method="post" action="/Task/Edit/@Model.TaskId">
     @Html.HttpMethodOverride(HttpVerbs.Put)
-    @Html.Label("Title", "Task name")
+    @Html.Label("Title", "Titlu")
     @Html.TextBox("Title", Model.Title, new { @class = "form-control" })
+    @Html.Label("Title", "Descriere")
+    @Html.TextBox("Title", Model.Description, new { @class = "form-control" })
     <br />
-    @Html.Label("Title", "Due date")
+    @Html.Label("Title", "Data final")
     <input type="date" class="form-control" name="DueDate" value="@Model.DueDate.Year-@Model.DueDate.Month-@Model.DueDate.Day" />
     <br />
     <button class="btn btn-info" type="submit">Modify task</button>
