@@ -29,6 +29,15 @@ namespace TaskManagement.Controllers
             ViewBag.Notifications = notifications;
             return View();
         }
-        
+        public ActionResult ShowInbox()
+        {
+            System.Diagnostics.Debug.WriteLine("Da");
+            var user = User.Identity.GetUserId();
+            var notifications = from p in db.Notifications
+                                where p.UserId == user
+                                select p;
+            ViewBag.Notifications = notifications;
+            return PartialView("~/Views/Shared/_InboxPartial.cshtml");
+        }
     }
 }

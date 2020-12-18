@@ -6,18 +6,19 @@
     <title>@ViewBag.Title - Task Manager</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
-        <div class="container">
+    <nav class="navbar navbar-expand-sm navbar-light fixed-top bg-light">
+        <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"></button>
             <a class="navbar-brand" href="/">Task Manager</a>
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav mr-auto">
-                    <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="/Home/About" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="/Home/Contact" class="nav-link">Contact</a></li>
+                    <li class="nav-item dropdown">
+                        <a onclick="drop(null,'/Profile/ShowInbox')" class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell"></i></a>
+                        <div id="inbox" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        </div>
+                    </li>
                 </ul>
 
                 @Html.Partial("_LoginPartial")
@@ -37,5 +38,6 @@
     @Scripts.Render("~/bundles/popper")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

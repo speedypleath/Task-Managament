@@ -30,8 +30,8 @@ namespace TaskManagement.Models
         public ApplicationDbContext()
  : base("DefaultConnection", throwIfV1Schema: false)
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,
-            Migrations.Configuration>("DefaultConnection"));
+        //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,
+        //    Migrations.Configuration>("DefaultConnection"));
         }
 
         public DbSet<Project> Projects { get; set; }

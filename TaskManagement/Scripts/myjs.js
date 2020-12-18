@@ -6,7 +6,10 @@ window.onload = function () {
     });
 }
 function drop(id,url) {
-    var content = document.getElementById("content").value;
+    var content = document.getElementById("content");
+    if (content != null)
+        content = content.value;
+    console.log("da");
     $.ajax({
         type: 'GET',
         url: url,
@@ -15,9 +18,11 @@ function drop(id,url) {
             content: content,
             },
     success:
-    function (response) {
-        // Generate HTML table.
-        $('#empList').html(response);
+        function (response) {
+            if (url == "/Profile/ShowInbox")
+                $('#inbox').html(response);
+            else
+                $('#empList').html(response);
     },
     error:
         function (response) {

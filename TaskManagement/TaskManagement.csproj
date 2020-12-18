@@ -188,13 +188,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012041651395_initial.cs" />
-    <Compile Include="Migrations\202012041651395_initial.designer.cs">
-      <DependentUpon>202012041651395_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012042217323_not.cs" />
-    <Compile Include="Migrations\202012042217323_not.designer.cs">
-      <DependentUpon>202012042217323_not.cs</DependentUpon>
+    <Compile Include="Migrations\202012181415282_initial.cs" />
+    <Compile Include="Migrations\202012181415282_initial.designer.cs">
+      <DependentUpon>202012181415282_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -385,26 +381,23 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Shared\_InboxPartial.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202012041651395_initial.resx">
-      <DependentUpon>202012041651395_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012042217323_not.resx">
-      <DependentUpon>202012042217323_not.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202012181415282_initial.resx">
+      <DependentUpon>202012181415282_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,5 @@
+﻿@model IEnumerable<TaskManagement.Models.ApplicationUser>
+@foreach (var not in @ViewBag.Notifications)
+{
+<a class="dropdown-item" href=@not.Action> @not.Content</a>
+}
