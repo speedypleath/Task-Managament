@@ -1,3 +1,4 @@
 TaskManagement/App_Data/
 .vs/
 TaskManagement/Migrations/
+TaskManagement/obj/Debug/TaskManagement.Migrations.wtf.resources

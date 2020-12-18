@@ -202,8 +202,8 @@ namespace TaskManagement.Controllers
         {
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
             invitation.Content = user.UserName + invitation.Content;
-            invitation.IsRead = false;
             invitation.Date = DateTime.Now;
+            invitation.Type = "invitation";
             System.Diagnostics.Debug.WriteLine(invitation.Content);
             db.Notifications.Add(invitation);
              db.SaveChanges();

@@ -139,8 +139,8 @@ namespace TaskManagement.Controllers
         {
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
             note.Content = user.UserName + note.Content;
-            note.IsRead = false;
             note.Date = DateTime.Now;
+            note.Type = "assignment";
             db.Notifications.Add(note);
             UserTask ut = new UserTask();
             ut.TaskId = TaskId;

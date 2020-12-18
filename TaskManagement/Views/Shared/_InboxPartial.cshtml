@@ -1,5 +1,52 @@
 ﻿@model IEnumerable<TaskManagement.Models.ApplicationUser>
+
 @foreach (var not in @ViewBag.Notifications)
 {
-<a class="dropdown-item" href=@not.Action> @not.Content</a>
+    int date = (int)DateTime.Now.Subtract(not.Date).TotalMinutes;
+    int caz = 1;
+    if(date>60)
+    {
+        date /= 60;
+        caz += 1;
+    }
+    if(date>24)
+    {
+        date /= 24;
+        caz += 1;
+    }
+    var content = not.Content.Split();
+    var str = "";
+    <div class="dropdown-item">
+        @switch(not.Type)
+        {
+            case "invitation":  @:<i class="fa fa-users"></i>
+                break;
+            case "assignment": @:<i class="fas fa-tasks"></i>
+                break;
+            default: @:<i class="fa fa-comments"></i>
+                break;
+        }
+        <a href=@not.Action>
+            <strong>@content[0]</strong>
+            @for (var i = 1; i < content.Length; i++)
+            {
+                str += content[i] + " ";
+            }
+        @str
+    </a>
+
+    <br />
+
+    <small>@date
+        @switch (caz)
+        {
+            case 1: @:minutes ago
+                break;
+            case 2: @:hours ago
+                break;
+            default: @:days ago
+                break;
+          }
+        </small>
+    </div>
 }

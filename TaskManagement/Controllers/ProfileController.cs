@@ -36,6 +36,7 @@ namespace TaskManagement.Controllers
             var notifications = from p in db.Notifications
                                 where p.UserId == user
                                 select p;
+            notifications = notifications.OrderByDescending(l => l.Date);
             ViewBag.Notifications = notifications;
             return PartialView("~/Views/Shared/_InboxPartial.cshtml");
         }

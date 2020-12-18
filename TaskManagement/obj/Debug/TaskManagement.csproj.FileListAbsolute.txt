@@ -556,3 +556,4 @@ D:\TaskManagement\TaskManagament\TaskManagement\bin\Microsoft.CodeDom.Providers.
 D:\TaskManagement\TaskManagament\TaskManagement\obj\Debug\TaskManagement.csproj.CopyComplete
 D:\TaskManagement\TaskManagament\TaskManagement\obj\Debug\TaskManagement.Migrations.initial.resources
 D:\TaskManagement\TaskManagament\TaskManagement\obj\Debug\TaskManagement.csproj.GenerateResource.cache
+D:\TaskManagement\TaskManagament\TaskManagement\obj\Debug\TaskManagement.Migrations.wtf.resources

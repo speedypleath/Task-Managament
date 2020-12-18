@@ -17,9 +17,23 @@ namespace TaskManagement.Controllers
         {
             try
             {
-                comment.UserId = User.Identity.GetUserId();
-                comment.Date = DateTime.Now;
+                var note = new Notification();
+                note.Date = DateTime.Now;
+                note.Type = "comment";
+                var task = db.Tasks.Find(comment.TaskId);
                 string userId = User.Identity.GetUserId();
+                var user = db.Users.Find(userId);
+                note.Content = user.UserName + " commented on a task you were assigned";
+                note.Action = "/Task/Show/" + comment.TaskId;
+                foreach(var u in task.Users)                
+                    if (u.UserId != userId)
+                    {
+                        note.UserId = u.UserId;
+                        db.Notifications.Add(note);
+                    }
+                
+                comment.UserId = userId;
+                comment.Date = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine("DAaaa");
                 db.Comments.Add(comment);
                 db.SaveChanges();
