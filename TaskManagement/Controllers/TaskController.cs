@@ -51,7 +51,8 @@ namespace TaskManagement.Controllers
         {
             try
             {
-                task.Description = "";
+                System.Diagnostics.Debug.WriteLine("aici");
+                System.Diagnostics.Debug.WriteLine(task.Description);
                 db.Tasks.Add(task);
                 db.SaveChanges();
                 TempData["success"] = "Taskul a fost adaugat cu succes!";

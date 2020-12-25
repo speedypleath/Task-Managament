@@ -5,15 +5,20 @@
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
 <form method="post" action="/Task/New">
- 
+
     <input type="hidden" name="ProjectId" value="@ViewBag.projectId" />
-    <label>Nume</label>
+    <label>Name</label>
     <br />
     <input type="text" name="Title" />
     <input type="hidden" name="Status" value="Not started" />
     <br />
+    <label>Description</label>
     <br />
-    <label>Data</label>
+    <input type="text" name="Description" />
+    <input type="hidden" name="Status" value="Not started" />
+    <br />
+    <br />
+    <label>Due Date</label>
     <br />
     <input type="hidden" name="StartDate" value="@DateTime.Now.ToString()" />
     <input type="date" class="form-control" name="DueDate" />

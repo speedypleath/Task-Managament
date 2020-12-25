@@ -33,7 +33,7 @@
     @Html.Label("Title", "Titlu")
     @Html.TextBox("Title", Model.Title, new { @class = "form-control" })
     @Html.Label("Title", "Descriere")
-    @Html.TextBox("Title", Model.Description, new { @class = "form-control" })
+    @Html.TextBox("Description", Model.Description, new { @class = "form-control" })
     <br />
     @Html.Label("Title", "Data final")
     <input type="date" class="form-control" name="DueDate" value="@Model.DueDate.Year-@Model.DueDate.Month-@Model.DueDate.Day" />
