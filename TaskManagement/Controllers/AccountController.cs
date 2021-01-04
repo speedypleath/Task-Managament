@@ -288,10 +288,10 @@ namespace TaskManagement.Controllers
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
-            {
-                return View("Error");
-            }
+          //  if (userId == null)
+         //   {
+         //       return View("Error");
+          //  }
             var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
@@ -323,11 +323,12 @@ namespace TaskManagement.Controllers
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-            if (loginInfo == null)
-            {
+                if (loginInfo == null)
+               {
+                System.Diagnostics.Debug.WriteLine("1");
                 return RedirectToAction("Login");
-            }
-
+               }
+            System.Diagnostics.Debug.WriteLine(loginInfo);
             // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)

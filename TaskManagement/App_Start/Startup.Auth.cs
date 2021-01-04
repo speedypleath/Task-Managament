@@ -58,11 +58,12 @@ namespace TaskManagement
                appId: "391135408669033",
                appSecret: "243e404944237637a0740e5da79cb8cd");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+
+                ClientId = "624451128190-n8qc7rdcnum9j2ifk7cm5mvh0dfrv218.apps.googleusercontent.com",
+                ClientSecret = "GaIb1bOt6mkPG_KK55p3pAGT"
+            });
         }
     }
 }

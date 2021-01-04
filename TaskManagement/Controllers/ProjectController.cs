@@ -8,7 +8,7 @@ using TaskManagement.Models;
 
 namespace TaskManagement.Controllers
 {
-
+    [Authorize(Roles = "User,Admin")]
     public class ProjectController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
