@@ -11,7 +11,78 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+.smallform {
+    max-width: 250px;
+}
+.invform {
+    border: none;
+    background-color: inherit;
+}
+.invform2 {
+    border: none;
+    background-color: inherit;
+    color: white;
+}
+#test{
+    margin:15px;
+}
+.invform2:focus {
+    background-color :white;
+    color :black;
+}
+.invform2 :hover
+.h3form {
+    height: 50px;
+    font-size: 25px;
+    border: none;
+}
+.dateform {
+    max-width: 200px;
+    font-size: 20px;
+    border: none;
+}
+.invbtn {
+    outline: none;
+    border: 0px;
+    box-sizing: none;
+    background-color: transparent;
+}
+.bigform {
+    height: 300px;
+    width: 500px;
+    font-size: 20px;
+    overflow: auto;
+    border: none;
+    resize: none;
+}
+.butt{
+    width : 65px;
+    display: inline; 
+}
+#container {
+    margin: 5px;
+    padding: 20px;
 
+}
+.selected {
+    background-color: #007bff;
+    color: white;
+    z-index: 500;
+}
+.d-flex .d-inline :hover{
+    background-color: #007bff;
+    color:white;
+}
+#floated {
+    float: left;
+}
+.bigform::-webkit-scrollbar {
+    display: none;
+}
+.select{
+    max-width: 200px;
+    border: none;
+}
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */

@@ -1,99 +1,129 @@
-﻿@using System.Security.Principal;
+﻿
+@using System.Security.Principal;
 @using Microsoft.AspNet.Identity;
 @model TaskManagement.Models.Task
 @{
     ViewBag.Title = "Afisare task " + Model.Title;
 }
-<h2> @Model.Title </h2>
-<h4> Due on @Model.DueDate </h4>
-<h4> aa @Model.Description</h4>
+
+<div> class="selected" value="@Model.StatusId"></div>
 <h3 style="color:forestgreen">@ViewBag.success</h3>
 <h3 class="text-danger">@ViewBag.fail</h3>
-@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+<form method="post" id="main" action="/Task/Edit/@Model.TaskId">
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+</form>
+<br />
+
+<button onclick="drop(@Model.TaskId,'/Task/UpdateSearch')" class="btn btn-secondary dropdown-toggle butt" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <i class="fas fa-users"></i>
+    <span class="caret"></span>
+</button>
+
+<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li id="empList"></li>
+    <li>
+        <form class="navbar navbar-light bg-light" id="selected" method="post" action="/Task/Link">
+            @Html.Hidden("TaskId", Model.TaskId)
+            @Html.Hidden("UserId")
+            @Html.Hidden("Content", " assigned you " + Model.Title)
+            @Html.Hidden("Action", "/Task/Show/" + Model.TaskId)
+            <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">@@</span>
+                <input id="content" oninput="drop(@Model.TaskId,'/Task/UpdateSearch')" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+            </div>
+        </form>
+
+    </li>
+    <li role="separator" class="divider"></li>
+    <li>
+
+    </li>
+
+</ul>
+
+<select form="main" class="selectpicker" data-style="bg-secondary" name="StatusId">
+    @foreach (var s in ViewBag.status)
+    {
+        <option value="@s.StatusId" class="bg-@s.Color list-group-item list-group-item-action">@s.Name</option>
+
+    }
+</select>
+
+
+
+<div class="d-inline justify-content-center">
+    <span>Started on</span>
+    <input form="main" class="dateform form-control d-inline" type="date" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+</div>
+
+
+<div class="d-inline float-right">
+    <span>Due on</span>
+    <input form="main" class="dateform form-control d-inline" type="date" name="DueDate" value="@Model.DueDate.ToString("yyyy-MM-dd")" />
+</div>
 
 <br />
-@foreach (var comm in Model.Comments)
-{
-    <div class="container">
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <div>
-                    <div id="state1">
+<hr />
+
+<link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+
+<button class="btn btn-success" form="main">
+    Submit changes
+</button>
+<form method="post" action="/Project/Show/@Model.ProjectId" class="d-inline">
+    <button class="btn btn-info" type="submit">Back to project</button>
+</form>
+
+
+
+
+<br />
+<br />
+<div id=container>
+    <div id="floated">
+        <input form="main" type="hidden" name="ProjectId" value="@Model.ProjectId" />
+        <input form="main" class="invform h3form" name="Title" value="@Model.Title" />
+        <br />
+        <textarea id="text" form="main" class="bigform" name="Description">@Model.Description</textarea>
+    </div>
+    <div>
+        @foreach (var comm in Model.Comments)
+        {
+            <div>
+                <div class="d-inline">
+                    <div class="d-inline" id="state1">
                         <p>@comm.Content</p> <small class="float-right">@comm.Date</small>
                     </div>
                     @if (comm.UserId == User.Identity.GetUserId() || User.IsInRole("Admin"))
                     {
-                        <div style="display: inline-block; float : left; margin-right: 15px">
-                            <button onclick="activate(this,@comm.CommentId,`@comm.Date`,`@comm.Content`)"  class="fas fa-edit" style="border: none; background: transparent"></button>
-                        </div>
+                        <button onclick="activate(this,'/Comment/Edit/'+@comm.CommentId,`@comm.Content`)" class="fas fa-edit" style="border: none; background: transparent"></button>
                     }
                 </div>
-            @if (comm.UserId == User.Identity.GetUserId() || User.IsInRole("Admin"))
-            {
-                <div style="display: inline-block; float : left">
-                    <form method="post" action="/Comment/Delete/@comm.CommentId">
+                @if (comm.UserId == User.Identity.GetUserId() || User.IsInRole("Admin"))
+                {
+
+                    <form class="d-inline" method="post" action="/Comment/Delete/@comm.CommentId">
                         @Html.HttpMethodOverride(HttpVerbs.Delete)
                         <button class="fas fa-trash" style="border: none; background: transparent" type="submit"></button>
                     </form>
-                </div>
-            }
-                <div class="text-center">
+
+                }
+                <br />
+                <div class="d-inline float-right">
                     <i class="fas fa-user"></i> <i>comentariu scris de</i> <strong> @comm.User.UserName </strong>
                 </div>
-                <div class="col-md-1"></div>
             </div>
-                </div>
-            </div>
+            <br />
             <hr />
-            }
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-10">
-                        <form method="post" action="/Comment/New">
-                            <input type="hidden" name="TaskId" value="@Model.TaskId" />
-                            <label>Continut comentariu</label>
-                            <br />
-                            <input class="form-control" name="Content" />
-                            <br />
-                            <button class="btn btn-success " type="submit">Adauga comentariu</button>
-                        </form>
-                        <br />
-                        <form method="post" action="/Task/Edit/@Model.TaskId">
-                            <button class="btn btn-info" type="submit">Editeaza taskul</button>
-                        </form>
-                        <br />
-                        <form method="post" action="/Project/Show/@Model.ProjectId">
-                            <button class="btn btn-info" type="submit">Inapoi la proiect</button>
-                        </form>
-                    </div>
-                    <div class="col-md-1"></div>
-                </div>
-            </div>
-
-<script>
-    function activate(e,id,date,content) {
-        console.log("Da");
-        console.log(id);
-        console.log(date);
-        console.log(content);
-        console.log(e.parentElement);
-        var aux = e.parentElement.parentElement.childNodes[1];
-        if (aux.id == "state1") {
-        aux.id = "state2"
-        aux.innerHTML = `<form method="post" action="/Comment/Edit/${id}">
-        @Html.HttpMethodOverride(HttpVerbs.Put)
-        <input class="form-control" name="Content" value="${content}"/>
-        </form>
-        <small> press edit again to cancel</small >`;
         }
-        else {
-        aux.id = "state1";
-        aux.innerHTML = `<p>${content}</p> <small class="float-right">${date}</small>`
-        }
+    </div>
+</div>
 
-        }
 
-</script>
+<form method="post" action="/Comment/New">
+    <input type="hidden" name="TaskId" value="@Model.TaskId" />
+    <input class="form-control" name="Content" placeholder="Comment..." />
+</form>
+
+

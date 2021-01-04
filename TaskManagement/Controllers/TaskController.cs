@@ -13,6 +13,71 @@ namespace TaskManagement.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public ActionResult ModifyStatus(int id,string content)
+        {
+            db.Tasks.Find(id).Status = db.Status.Where(p => p.Name == content).First();
+            db.SaveChanges();
+            return RenderTasks(null, content, "Board");
+        }
+
+        public ActionResult RenderTasks(int? id, string content = "DueDate", string how = "List")
+        {
+            var tasks = SortTasks(id,content);
+            ViewBag.tasks = tasks.ToArray();
+            ViewBag.status = db.Status.Where(s => s.IsGlobal).Select(s => s).ToArray();
+            var url = "~/Views/Shared/_" + how + ".cshtml";
+            return PartialView(url, tasks);
+        }
+
+        public List<Task> SortTasks(int? id, string content)
+        {
+            IOrderedQueryable<Task> tasks = null;
+            if(id!=null)
+            {
+                tasks = from p in db.Tasks
+                        where p.ProjectId == id
+                        orderby content
+                        select p;
+            }
+            else if (User.IsInRole("Admin"))
+            {
+                tasks = from p in db.Tasks
+                        orderby content
+                        select p;
+            }
+            else 
+            {
+                string userId = User.Identity.GetUserId();
+                IQueryable<int> up = from p in db.UserTasks
+                                     where p.UserId == userId
+                                     select p.TaskId;
+                tasks = from task in db.Tasks
+                        where up.Contains(task.TaskId)
+                        orderby content
+                        select task;
+            }
+            List<Task> aux = tasks.ToList();
+            switch (content)
+            {
+                case "DueDate":
+                    aux.Sort((x, y) => DateTime.Compare(x.DueDate, y.DueDate));
+                    break;
+                case "Name":
+                    aux.Sort((x, y) => String.Compare(x.Title, y.Title));
+                    break;
+                default:
+                    aux.Sort((x, y) => DateTime.Compare(x.StartDate, y.StartDate));
+                    break;
+            }
+            return aux;
+        }
+
+        public ActionResult Index(int? id, string how="List")
+        {
+            ViewBag.how = how;
+            ViewBag.id = id;
+            return View();
+        }
         public ActionResult Show(int id)
         {
             var task = db.Tasks.Find(id);
@@ -24,6 +89,7 @@ namespace TaskManagement.Controllers
             {
                 ViewBag.fail = TempData["fail"].ToString();
             }
+            ViewBag.status = db.Status.Where(s => s.IsGlobal).Select(s => s);
             return View(task);
         }
 
@@ -51,8 +117,7 @@ namespace TaskManagement.Controllers
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("aici");
-                System.Diagnostics.Debug.WriteLine(task.Description);
+            //    task.Status = "not started";
                 db.Tasks.Add(task);
                 db.SaveChanges();
                 TempData["success"] = "Taskul a fost adaugat cu succes!";
@@ -85,7 +150,6 @@ namespace TaskManagement.Controllers
             }
             TempData["fail"] = "You're not authorized to see this!";
             return RedirectToAction("Index", "Project");
-
         }
 
         [HttpPut]
@@ -96,6 +160,7 @@ namespace TaskManagement.Controllers
                 Task task = db.Tasks.Find(id);
                 if (TryUpdateModel(task))
                 {
+                    task.StatusId = requestTask.StatusId;
                     task.Title = requestTask.Title;
                     task.Description = requestTask.Description;
                     task.DueDate = requestTask.DueDate;

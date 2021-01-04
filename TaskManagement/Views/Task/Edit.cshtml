@@ -1,7 +1,7 @@
 ﻿@model TaskManagement.Models.Task
 @{ ViewBag.Title = "Edit"; }
 <h2>Edit task</h2>
-@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
 <hr />
 <button onclick="drop(@Model.TaskId,'/Task/UpdateSearch')" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     <i class="fas fa-users"></i>

@@ -1,0 +1,45 @@
+﻿@model TaskManagement.Models.Task
+@{  
+    var how = "List";
+    var id = ViewBag.id;
+    if (id == null)
+    {
+        id = "null";
+        ViewBag.title = "Tasks";
+    }
+    else
+    {
+        ViewBag.title = "Project " + id;
+    }
+}
+
+
+<h4>Sort by</h4>
+
+<div class="float-left page-link d-inline">
+    <a onclick="drop(@id,'/Task/RenderTasks','DueDate','@how')" href="#">Due Date</a>
+</div>
+<div class="float-left page-link d-inline">
+    <a onclick="drop(@id,'/Task/RenderTasks','Name','@how')" href="#">Name</a>
+</div>
+<div class="float-left page-link d-inline">
+    <a onclick="drop(@id,'/Task/RenderTasks','Start Date','@how')" href="#">Start Date</a>
+</div>
+
+<div class="float-right page-link d-inline">
+    <span class="fa fa-list"></span>
+    <a onclick="drop(@id,'/Task/RenderTasks',null,`Board`)" href="#">Board</a>
+</div>
+<div class="page-link d-inline float-right">
+    <i class="fa fa-clipboard" aria-hidden="true"></i>
+    <a onclick="drop(@id,'/Task/RenderTasks',null,`List`)" href="#">List</a>
+</div>
+
+<br />
+<br />
+
+
+<hr />
+<div id="empList" class="list-group">
+
+</div>

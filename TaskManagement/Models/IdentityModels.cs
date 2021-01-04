@@ -40,6 +40,7 @@ namespace TaskManagement.Models
         public DbSet<UserTask> UserTasks { get; set; }
         public DbSet<UserProject> UserProjects { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Status> Status { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

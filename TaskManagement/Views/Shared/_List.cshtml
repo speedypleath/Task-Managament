@@ -1,0 +1,20 @@
+﻿<div class="list-group">
+    @foreach (var task in ViewBag.tasks)
+    {
+        <a href="/Task/Show/@task.TaskId" class="bg-@task.Status.Color list-group-item list-group-item-action text-white">
+
+            <form method="post" action="/Task/Edit/@task.TaskId">
+                @Html.HttpMethodOverride(HttpVerbs.Put)
+                <input type="hidden" name="TaskId" value="@task.TaskId" />
+                <div class="d-inline" onclick="(function(e){e.preventDefault();})(event)"><input class="invform2" name="Title" value="@task.Title" /></div>
+                <input type="hidden" name="Status" value="not started" />
+                <input type="hidden" name="Description" value="@task.Description" />
+                <input type="hidden" name="StartDate" value="@task.StartDate" />
+                <input type="hidden" name="DueDate" value="@task.DueDate" />
+                <span class="float-right">@task.DueDate.ToString("dd/MM/yyyy")</span>
+            </form>
+
+        </a>
+
+    }
+</div>
