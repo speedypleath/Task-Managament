@@ -44,8 +44,10 @@ namespace TaskManagement.Controllers
             }
             return View();
         }
-        public ActionResult Show(int id)
+        public ActionResult Show(int id, string how="List")
         {
+            ViewBag.how = how;
+            ViewBag.id = id;
             var userId = User.Identity.GetUserId();
             var user = from p in db.Users
                        where p.Id == userId
@@ -66,6 +68,7 @@ namespace TaskManagement.Controllers
                 ViewBag.fail = TempData["fail"].ToString();
             }
             var project = db.Projects.Find(id);
+
             if (TempData.ContainsKey("success"))
             {
                 ViewBag.success = TempData["success"].ToString();

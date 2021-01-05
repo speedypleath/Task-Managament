@@ -510,6 +510,7 @@
     <Content Include="Views\Task\List.cshtml" />
     <Content Include="Views\Shared\_Board.cshtml" />
     <Content Include="Views\Shared\_List.cshtml" />
+    <Content Include="Views\Shared\_Tasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

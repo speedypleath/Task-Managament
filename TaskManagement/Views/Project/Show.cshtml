@@ -1,5 +1,5 @@
 ﻿@model TaskManagement.Models.Project
-@{ ViewBag.Title = "Afisare proiect " + Model.Name; }
+@{ ViewBag.Title = "Project " + Model.Name; }
 <script>
     var id = @Model.ProjectId;
     
@@ -14,7 +14,7 @@
         <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li id="empList"></li>
+        <li id="Users"></li>
         <li>
             <form class="navbar navbar-light bg-light" id="selected" method="post" action="/Project/Invite">
                 @Html.Hidden("ProjectId", Model.ProjectId)
@@ -41,13 +41,8 @@
 
 
 <br />
-@foreach (var task in Model.Tasks)
-{
-    <h2>@task.Title</h2>
-    <p>@task.Description</p>
-    <a href="/Task/Show/@task.TaskId">Afisare task</a>
-    <hr />
-    <br />
+@{ 
+    Html.RenderPartial("~/Views/Shared/_Tasks.cshtml");
 }
 <form>
     <button class="btn btn-info" onclick="location.href='/Task/New/@Model.ProjectId'" type="button">Adauga un task</button>

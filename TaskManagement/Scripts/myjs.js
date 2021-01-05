@@ -27,7 +27,7 @@ window.onload = function () {
         drop(null, '/Task/RenderTasks', null, `List`);
     else if (document.title.slice(0, 7) == "Project") {
         console.log(document.title.split(" ").slice(-1)[0]);
-        drop(document.title.split(" ").slice(-1)[0], '/Task/RenderTasks', null, `List`);
+        drop(id, '/Task/RenderTasks', null, `List`);
     }
     else
         console.log(document.title);
@@ -139,8 +139,11 @@ function drop(id, url, content, how) {
             },
     success:
         function (response) {
+            console.log(url);
             if (url == "/Profile/ShowInbox")
                 $('#inbox').html(response);
+            else if (url == "/Project/UpdateSearch")
+                $('#Users').html(response);
             else
                 $('#empList').html(response);
 
