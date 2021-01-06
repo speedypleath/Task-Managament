@@ -180,6 +180,8 @@ namespace TaskManagement.Controllers
                        select u;
             List < ApplicationUser > users = aux2.ToList();
             users = users.OrderBy(each => LevenshteinDistance(each.UserName, content)).ToList();
+            users.RemoveAll(p => !p.UserName.ToLower().Contains(content.ToLower()));
+            users = users.OrderBy(each => LevenshteinDistance(each.UserName, content)).ToList();
             return PartialView("_SearchPartial", users.Take(3));
         }
 
